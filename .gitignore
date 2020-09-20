@@ -1,3 +1,8 @@
+.vscode/
+CMakeFiles/
+sockClient
+sockServer
+
 # Prerequisites
 *.d
 
