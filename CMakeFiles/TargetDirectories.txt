@@ -1,3 +1,0 @@
-/run/media/astro/DATA/Dev/2020/sockChat/CMakeFiles/rebuild_cache.dir
-/run/media/astro/DATA/Dev/2020/sockChat/CMakeFiles/edit_cache.dir
-/run/media/astro/DATA/Dev/2020/sockChat/CMakeFiles/sockChat.dir
