@@ -5,6 +5,7 @@
 void initServer(int PORT) {
     int serverFd, conn;
     struct sockaddr_in addr;
+    char buffer[1024] = {0};
 
     serverFd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -16,10 +17,11 @@ void initServer(int PORT) {
     bind(serverFd, (struct sockaddr *)&addr, sizeof(addr));
 
     listen(serverFd, 3);
+    std::cout << "[*] Listening on port " << PORT << std::endl;
 
     conn = accept(serverFd, (struct sockaddr *)&addr, (socklen_t*)sizeof(addr));
+    std::cout << "[+] New Incoming Connection..." << std::endl;
 
-    char buffer[1024] = {0};
     read(conn, buffer, 1024);
     std::cout << buffer << std::endl;
 }
