@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <netdb.h>
+#include <arpa/inet.h>
 
 void initServer(int PORT) {
     int serverFd, conn;
@@ -24,10 +25,14 @@ void initServer(int PORT) {
     std::cout << "[*] Listening on port " << PORT << std::endl;
 
     conn = accept(serverFd, (struct sockaddr *)&addr, (socklen_t*)&addrlen);
-    std::cout << "[+] New Incoming Connection..." << std::endl;
+    struct sockaddr_in* pV4Addr = (struct sockaddr_in*)&addr;
+    struct in_addr ipAddr = pV4Addr->sin_addr;
+    char str[INET_ADDRSTRLEN];
+    std::string connAddr = inet_ntop(AF_INET, &ipAddr, str, INET_ADDRSTRLEN);
+    std::cout << "[+] New Incoming Connection from " << connAddr << std::endl;
 
     read(conn, buffer, 1024);
-    std::cout << buffer << std::endl;
+    std::cout << connAddr << ": " << buffer << std::endl;
 }
 
 int main(int argc, char **argv) {
