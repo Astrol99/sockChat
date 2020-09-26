@@ -6,8 +6,12 @@ void initServer(int PORT) {
     int serverFd, conn;
     struct sockaddr_in addr;
     char buffer[1024] = {0};
+    int addrlen = sizeof(addr);
+    int opt = 1;
 
     serverFd = socket(AF_INET, SOCK_STREAM, 0);
+
+    setsockopt(serverFd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt));
 
     // Binding socket to port
     addr.sin_family = AF_INET;
@@ -19,7 +23,7 @@ void initServer(int PORT) {
     listen(serverFd, 3);
     std::cout << "[*] Listening on port " << PORT << std::endl;
 
-    conn = accept(serverFd, (struct sockaddr *)&addr, (socklen_t*)sizeof(addr));
+    conn = accept(serverFd, (struct sockaddr *)&addr, (socklen_t*)&addrlen);
     std::cout << "[+] New Incoming Connection..." << std::endl;
 
     read(conn, buffer, 1024);
