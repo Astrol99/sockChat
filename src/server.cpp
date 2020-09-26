@@ -32,7 +32,7 @@ void initServer(int PORT) {
 
 int main(int argc, char **argv) {
     if (argc != 2) {
-        std::cout << "Usage: ./server <PORT>" << std::endl;
+        std::cout << "Usage: ./sockServer <PORT>" << std::endl;
 
         return 1;
     }
