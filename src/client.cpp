@@ -28,7 +28,12 @@ int main(int argc, char **argv) {
     // Convert IP to binary
     inet_pton(AF_INET, IP, &servAddr.sin_addr);
 
-    connect(sock, (struct sockaddr *)&servAddr, sizeof(servAddr));
+    if (connect(sock, (struct sockaddr *)&servAddr, sizeof(servAddr)) < 0) {
+        std::cout << "[-] Unable to connect" << std::endl;
+
+        return 1;
+    }
+    
 
     std::cin >> userMsg;
     send(sock, userMsg.c_str(), userMsg.length(), 0);

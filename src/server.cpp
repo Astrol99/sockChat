@@ -33,7 +33,7 @@ void initServer(int PORT) {
 
     conn = accept(serverFd, (struct sockaddr *)&addr, (socklen_t*)&addrlen);
     std::string connIP = getConnIP(addr);
-    std::cout << "[+] New Incoming Connection from " << connIP << std::endl;
+    std::cout << "New Incoming Connection from " << connIP << std::endl;
 
     recv(conn, buffer, 1024, 0);
     std::string userMsg = connIP + ": " + buffer;
