@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
     std::cin >> userMsg;
     send(sock, userMsg.c_str(), userMsg.length(), 0);
 
-    read(sock, buffer, 1024);
+    recv(sock, buffer, 1024, 0);
     std::cout << buffer << std::endl;
 
     return 0;

@@ -35,7 +35,7 @@ void initServer(int PORT) {
     std::string connIP = getConnIP(addr);
     std::cout << "[+] New Incoming Connection from " << connIP << std::endl;
 
-    read(conn, buffer, 1024);
+    recv(conn, buffer, 1024, 0);
     std::string userMsg = connIP + ": " + buffer;
 
     std::cout << userMsg << std::endl;
