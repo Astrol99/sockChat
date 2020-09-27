@@ -36,7 +36,10 @@ void initServer(int PORT) {
     std::cout << "[+] New Incoming Connection from " << connIP << std::endl;
 
     read(conn, buffer, 1024);
-    std::cout << connIP << ": " << buffer << std::endl;
+    std::string userMsg = connIP + ": " + buffer;
+
+    std::cout << userMsg << std::endl;
+    send(conn, userMsg.c_str(), userMsg.length(), 0);
 }
 
 int main(int argc, char **argv) {
