@@ -26,7 +26,11 @@ int main(int argc, char **argv) {
     servAddr.sin_port = htons(PORT);
 
     // Convert IP to binary
-    inet_pton(AF_INET, IP, &servAddr.sin_addr);
+    if (inet_pton(AF_INET, IP, &servAddr.sin_addr) != 1) {
+        std::cout << "[-] Invalid IP Address" << std::endl;
+        
+        return 1;
+    }
 
     if (connect(sock, (struct sockaddr *)&servAddr, sizeof(servAddr)) < 0) {
         std::cout << "[-] Unable to connect" << std::endl;
@@ -34,7 +38,6 @@ int main(int argc, char **argv) {
         return 1;
     }
     
-
     std::cin >> userMsg;
     send(sock, userMsg.c_str(), userMsg.length(), 0);
 
