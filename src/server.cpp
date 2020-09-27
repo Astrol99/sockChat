@@ -3,6 +3,13 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 
+std::string getConnIP(struct sockaddr_in &addr) {
+    struct sockaddr_in* pV4Addr = (struct sockaddr_in*)&addr;
+    struct in_addr ipAddr = pV4Addr->sin_addr;
+    char str[INET_ADDRSTRLEN];
+    return inet_ntop(AF_INET, &ipAddr, str, INET_ADDRSTRLEN);
+}
+
 void initServer(int PORT) {
     int serverFd, conn;
     struct sockaddr_in addr;
@@ -25,14 +32,11 @@ void initServer(int PORT) {
     std::cout << "[*] Listening on port " << PORT << std::endl;
 
     conn = accept(serverFd, (struct sockaddr *)&addr, (socklen_t*)&addrlen);
-    struct sockaddr_in* pV4Addr = (struct sockaddr_in*)&addr;
-    struct in_addr ipAddr = pV4Addr->sin_addr;
-    char str[INET_ADDRSTRLEN];
-    std::string connAddr = inet_ntop(AF_INET, &ipAddr, str, INET_ADDRSTRLEN);
-    std::cout << "[+] New Incoming Connection from " << connAddr << std::endl;
+    std::string connIP = getConnIP(addr);
+    std::cout << "[+] New Incoming Connection from " << connIP << std::endl;
 
     read(conn, buffer, 1024);
-    std::cout << connAddr << ": " << buffer << std::endl;
+    std::cout << connIP << ": " << buffer << std::endl;
 }
 
 int main(int argc, char **argv) {
