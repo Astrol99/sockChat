@@ -1,7 +1,15 @@
 #include <iostream>
-#include <unistd.h>
-#include <netdb.h>
-#include <arpa/inet.h>
+#include <string>
+#ifdef _WIN32
+    #include <WinSock2.h>
+    #include <WS2tcpip.h>
+#else
+    #include <sys/socket.h>
+    #include <arpa/inet.h>
+    #include <netdb.h>
+    #include <unistd.h>
+#endif
+#pragma comment(lib, "Ws2_32.lib")
 
 std::string getConnIP(struct sockaddr_in &addr) {
     struct sockaddr_in* pV4Addr = (struct sockaddr_in*)&addr;
@@ -19,7 +27,7 @@ void initServer(int PORT) {
 
     serverFd = socket(AF_INET, SOCK_STREAM, 0);
 
-    setsockopt(serverFd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt));
+    setsockopt(serverFd, SOL_SOCKET, SO_REUSEADDR, (char *) &opt, sizeof(opt));
 
     // Binding socket to port
     addr.sin_family = AF_INET;
